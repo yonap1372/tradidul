@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>www.tradidul.com</title>
+  <style>
+    body {
+      font-family: 'Dancing Script', cursive;
+      margin: 0;
+      background: url('img/fond.jpg');
+      font-size: 20px;
+    }
+
+    header {
+      background-color: #d4f0f8 ;
+      color: #515f8e;
+      padding: 15px;
+      text-align: center;
+      position: relative;
+    }
+
+    header h1 {
+      margin: 0 0 10px 0;
+    }
+
+    #cart-icon {
+      font-size: 3.5em;
+      cursor: pointer;
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      color: #fee4ef;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 30px 10px;
+      gap: 50px;
+    }
+
+    .flip-card {
+      background-color: transparent;
+      width: 580px;
+      height: 450px;
+      perspective: 1000px;
+      cursor: pointer;
+      font-size: 17px;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .flip-card-front {
+      background-color: #fff;
+      color: black;
+    }
+
+    .flip-card-front img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .flip-card-back {
+      background-color: #fee4ef;
+      color: black;
+      transform: rotateY(180deg);
+      padding: 20px;
+    }
+
+    .flip-card-back h3 {
+      margin-top: 0;
+    }
+
+    #modal, #cart-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    #modal-content, #cart-modal-content {
+      background-color: white;
+      padding: 10px;
+      width: 100%;
+      max-width: 750px;
+      border-radius: 20px;
+      text-align: center;
+      font-size: 20px;
+       display: grid;
+ 
+    }
+
+    #modal-content img {
+      width: 100%;
+      max-height: 500px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    #modal-content p {
+      margin-top: 5px;
+    }
+
+    #close-modal {
+      margin-top: 20px;
+      background-color: #fee4ef;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #scrollTop {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #fee4ef;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .product-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 por fila */
+  gap: 20px;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 10px;
+
+    }
+
+    .product-gallery div {
+      text-align: center;
+    }
+
+    .product-gallery img {
+      width: 100%;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .product-gallery button {
+      margin-top: 5px;
+      padding: 5px 10px;
+      background-color: #9b59b6;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    footer {
+      background-color: transparent;
+      color: #5e7096;
+      text-align: center;
+      padding: 15px;
+      margin-top: 20px;
+    }
+
+    .social-links {
+      margin-top: 30px;
+    }
+
+    .social-links a {
+      color: white;
+      font-size: 2em;
+      margin: 0 15px;
+      transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: #f39c12;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>TRADIDUL</h1>
+    <span id="cart-icon" onclick="toggleCart()">🛒</span>
+  </header>
+
+  <div class="container">
+  <!-- Carta 1: SOBRE NOSOTROS -->
+  <div class="flip-card" onclick="openModal('¿Qué emociones o sensaciones trasmite nuestro diseño?', 'Seguridad, confianza, alegría, comodidad con un diseño \n\
+tradicional alusivo a nuestra cultura organizacional.', 'img/tradidul.png')">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <img src="img/LOGO TRADIDUL.png" alt="Sobre Nosotros">
+      </div>
+      <div class="flip-card-back">
+        <h3>SOBRE NOSOTROS</h3>
+        <p>Somos una comercializadora dedicada a preservar y promover los dulces tradicionales mexicanos, ofreciendo productos artesanales de alta calidad con ingredientes naturales. 
+            Nuestro enfoque está en la innovación, la autenticidad y la accesibilidad, fortaleciendo la relación con comunidades artesanas y priorizando la satisfacción del cliente.</p>
+        <p> +</p>
+        <p> +</p>
+        <p>MÁS INFORMACIÓN</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Carta 3: EN MEDIO -->
+  <div class="flip-card" onclick="openModal('VALORES', '*AUTENTICIDAD: Respetamos y promovemos la riqueza cultural de mexico a través de dulces tradicionales \n\
+\n\
+    *CALIDAD:Garantizamos productos elaborados con ingredientes naturales y sin conservadores artificiales \n\
+\n\
+    *COMPROMISO CON LA TRADICION: Preservamos la historia y esencia de la confitería mexicana, conectando generaciones a través del sabor \n\
+\n\
+    *SOSTENIBILIDAD: Apoyamos la producción responsable, trabajando con comunidades artesanas y fomentando prácticas ecológicas en los empaques \n\
+\n\
+    *INNOVACIÓN: Buscamos nuevas formas de presentar y comercializar nuestros productos sin perder su esencia tradicional \n\
+\n\
+    *HONESTIDAD Y TRANSPARENCIA: Mantenemos relaciones de confianza con nuestros clientes y proveedores \n\
+\n\
+    *TRABAJO EN COMUNIDAD: Colaboramos con productores locales y artesanos para fortalecer el comercio justo y el desarrollo económico regional')">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <img src="img/equipot.jpg" alt="Equipo de trabajo">
+      </div>
+      <div class="flip-card-back">
+        <h3>NUESTRO EQUIPO DE TRABAJO</h3>
+        <p>MISION</p>
+        <p>Somos una comercializadora comprometida con preservar y promover la rica herencia de los dulces tradicionales mexicanos. Nuestra prioridad es brindar una experiencia única a 
+            nuestros clientes a través de productos artesanales de alta calidad, elaborados con ingredientes naturales y sostenibles. Buscamos generar valor al ofrecer innovación, accesibilidad 
+            y autenticidad en cada sabor, mientras fortalecemos el vínculo con las comunidades artesanas y mantenemos la satisfacción de nuestros clientes como nuestro eje principal. </p>
+        <p>VISION</p>
+        <p>Ser reconocidos como la comercializadora de referencia en dulces tradicionales mexicanos, distinguidos por nuestro compromiso con la calidad, la autenticidad y la sostenibilidad 
+            siendo un puente entre las generaciones de consumidores modernos.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Carta 2: AL FINAL -->
+  <div class="flip-card" onclick="openModal('DULCES TRADIDUL', '', '')">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <img src="img/dulcess.jpg" alt="¿Qué productos o servicios ofrecen?">
+      </div>
+      <div class="flip-card-back">
+        <h3>¿QUÉ PRODUCTO OFRECEMOS?</h3>
+        <p>Ofrecemos cocadas, palanquetas, tarugos, churritos, obleas y más.</p>
+        <p> +</p>
+        <p> +</p>
+        <p>MÁS INFORMACIÓN</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+   
+  <!-- MODAL GENERAL -->
+  <div id="modal">
+    <div id="modal-content">
+      <h2 id="modal-title"></h2>
+      <img id="modal-img" src="" alt="">
+      <p id="modal-desc"></p>
+      <button id="close-modal" onclick="closeModal()">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- MODAL CARRITO -->
+  <div id="cart-modal">
+    <div id="modal-content">
+      <h3>Carrito de Compras</h3>
+      <ul id="cart-list"></ul>
+      <button onclick="toggleCart()">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- BOTÓN SUBIR -->
+  <button id="scrollTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+
+  <!-- FOOTER -->
+  <footer>
+    <section id="contacto">
+      <h2>Contacto</h2>
+      <p>Email: tradidulmex@gmail.com</p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/share/1AdQq1h4vV/?mibextid=qi2Omg" target="_blank">📘</a>
+        <a href="https://www.instagram.com/tradidul_/?igsh=aXZxZ21xMjdibGJz#" target="_blank">📸</a>
+        <a href="https://www.tiktok.com/@tradudulmex?_t=ZS-8xGozkbYdJV&_r=1" target="_blank">🎵</a>
+        <a href="https://maps.app.goo.gl/6FkPF5M8CRsapA3u6?g_st=aw" target="_blank">📍</a>
+      </div>
+    </section>
+    <p>&copy; 2025 Página de TradiDul | Todos los derechos reservados</p>
+  </footer>
+
+  <!-- SCRIPT -->
+<script>
+  const carrito = [];
+
+  const productos = [
+    { nombre: "Churrito Limon y Sal", precio: 15.40, imagen: "dulces/dulce1.jpg" },
+    { nombre: "Churrito Chile", precio: 15.40, imagen: "dulces/dulce2.jpg" },
+    { nombre: "Cocada", precio: 14.40, imagen: "dulces/dulce3.jpg" },
+    { nombre: "Obleas", precio: 13.15, imagen: "dulces/dulce4.jpg" },
+    { nombre: "Palanqueta", precio: 13.15, imagen: "dulces/dulce5.jpg" },
+    { nombre: "Tarugo Azucar", precio: 13.65, imagen: "dulces/dulce6.jpg" },
+    { nombre: "Tarugo Chile", precio: 13.65, imagen: "dulces/dulce7.jpg" },
+    { nombre: "Velitas", precio: 11.66, imagen: "dulces/dulce8.jpg" }
+  ];
+
+  function openModal(title, desc, imgSrc) {
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalImg = document.getElementById('modal-img');
+    const modalDesc = document.getElementById('modal-desc');
+
+    modal.style.display = 'flex';
+
+    if (title === "DULCES TRADIDUL") {
+      modalTitle.innerText = title;
+      modalImg.style.display = 'none';
+
+      modalDesc.innerHTML = `
+        <div class="product-gallery">
+          ${productos.map((p, i) => `
+            <div>
+              <img src="${p.imagen}" alt="${p.nombre}">
+              <p><strong>${p.nombre}</strong><br>$${p.precio} MXN</p>
+              <button onclick="agregarAlCarrito('${p.nombre}', ${p.precio})">Comprar</button>
+            </div>
+          `).join('')}
+        </div>`;
+    } else {
+      modalTitle.innerText = title;
+      modalImg.src = imgSrc;
+      modalImg.style.display = 'block';
+      modalDesc.innerText = desc;
+    }
+  }
+
+  function agregarAlCarrito(nombre, precio) {
+    carrito.push({ nombre, precio });
+    alert(`${nombre} agregado al carrito.`);
+  }
+
+  function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+  }
+
+  function toggleCart() {
+    const modal = document.getElementById('cart-modal');
+    modal.style.display = (modal.style.display === 'block') ? 'none' : 'block';
+
+    const lista = document.getElementById('cart-list');
+    if (carrito.length === 0) {
+      lista.innerHTML = '<li>No hay productos aún.</li>';
+      return;
+    }
+
+    let total = 0;
+    lista.innerHTML = carrito.map(p => {
+      total += p.precio;
+      return `<li>${p.nombre} - $${p.precio} MXN</li>`;
+    }).join('');
+    lista.innerHTML += `<hr><li><strong>Total: $${total} MXN</strong></li>`;
+  }
+</script>
+
+</body>
+</html>
